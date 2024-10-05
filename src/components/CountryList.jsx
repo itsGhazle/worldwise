@@ -3,13 +3,16 @@ import Spinner from "./Spinner";
 import Message from "./Message";
 import CountryItem from "./CountryItem";
 import PropTypes from "prop-types"
+import { useCities } from "../Contexts/CitiesContext";
 
 CountryList.propTypes= {
 cities:PropTypes.array,
 isLoading:PropTypes.bool
 }
 
-function CountryList({ cities, isLoading }) {
+function CountryList() {
+    const { cities, isLoading } = useCities();
+
   if (isLoading) return <Spinner />;
   if (!cities.length)
     return <Message message={"add your first city by clicking on the map"} />;
