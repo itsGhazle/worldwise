@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -69,7 +70,7 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  async function getCities(id) {
+  const getCities = useCallback(async function getCities(id) {
     if (Number(id) === currentCity.id) return;
     try {
       dispatch({ type: "loading" });
@@ -82,7 +83,7 @@ function CitiesProvider({ children }) {
         payload: "there was an error during fetching cities",
       });
     }
-  }
+  },[currentCity.id]);
   async function createCity(newCity) {
     try {
       dispatch({ type: "loading" });
