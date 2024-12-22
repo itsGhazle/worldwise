@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import PageNav from "../components/PageNav";
 import { useAuth } from "../Contexts/FakeAuthContext";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 
 export default function Login() {
@@ -14,12 +14,11 @@ export default function Login() {
   function handelSubmit(e) {
     e.preventDefault();
     if (email && password) login(email, password);
-    // console.log(email, password)
   }
   useEffect(() => {
-    if (isAuthenticated === true) navigate("/app",{replace:true});
+    if (isAuthenticated === true) navigate("/app", { replace: true });
   }, [isAuthenticated, navigate]);
-  
+
   return (
     <main className={styles.login}>
       <PageNav />

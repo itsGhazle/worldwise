@@ -43,7 +43,7 @@ function Form() {
         const res = await fetch(`${BASE_URL}latitude=${lat}&longitude=${lng}`);
         if (!res.ok) throw new Error("sth went wrong");
         const data = await res.json();
-        console.log(data);
+
         if (!data.countryCode)
           throw new Error("that doesnt seem to be a city.click somewhere else");
         setCityName(data.city || data.locality || "");

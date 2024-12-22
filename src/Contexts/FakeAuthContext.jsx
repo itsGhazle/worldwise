@@ -34,7 +34,6 @@ function AuthProvider({ children }) {
   //   const navigate = useNavigate();
 
   function login(email, password) {
-    console.log("yyyy");
     if (email === FAKE_USER.email && password === FAKE_USER.password)
       return dispatch({ type: "login", payload: FAKE_USER });
   }

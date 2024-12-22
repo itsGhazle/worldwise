@@ -2,16 +2,16 @@ import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import CountryItem from "./CountryItem";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { useCities } from "../Contexts/CitiesContext";
 
-CountryList.propTypes= {
-cities:PropTypes.array,
-isLoading:PropTypes.bool
-}
+CountryList.propTypes = {
+  cities: PropTypes.array,
+  isLoading: PropTypes.bool,
+};
 
 function CountryList() {
-    const { cities, isLoading } = useCities();
+  const { cities, isLoading } = useCities();
 
   if (isLoading) return <Spinner />;
   if (!cities.length)
@@ -19,10 +19,8 @@ function CountryList() {
 
   const countries = cities.reduce((acc, curr) => {
     if (!acc.map((el) => el.country).includes(curr.country))
-      return([...acc, { country: curr.country, emoji: curr.emoji }]);
-    else {
-      console.log(acc);
-    }
+      return [...acc, { country: curr.country, emoji: curr.emoji }];
+    else return acc;
   }, []);
   return (
     <ul className={styles.countryList}>

@@ -53,8 +53,8 @@ function CitiesProvider({ children }) {
 
   useEffect(() => {
     async function fetchCities() {
+      dispatch({ type: "loading" });
       try {
-        dispatch({ type: "loading" });
         const res = await fetch(`${BASE_URL}cities`);
         if (!res.ok) throw new Error("sth went wrong");
         const data = await res.json();
@@ -70,23 +70,26 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  const getCities = useCallback(async function getCities(id) {
-    if (Number(id) === currentCity.id) return;
-    try {
+  const getCities = useCallback(
+    async function getCities(id) {
+      if (Number(id) === currentCity.id) return;
       dispatch({ type: "loading" });
-      const res = await fetch(`${BASE_URL}cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "loaded/currentCity", payload: data });
-    } catch (error) {
-      dispatch({
-        type: "rejected",
-        payload: "there was an error during fetching cities",
-      });
-    }
-  },[currentCity.id]);
+      try {
+        const res = await fetch(`${BASE_URL}cities/${id}`);
+        const data = await res.json();
+        dispatch({ type: "loaded/currentCity", payload: data });
+      } catch (error) {
+        dispatch({
+          type: "rejected",
+          payload: "there was an error during fetching cities",
+        });
+      }
+    },
+    [currentCity.id]
+  );
   async function createCity(newCity) {
+    dispatch({ type: "loading" });
     try {
-      dispatch({ type: "loading" });
       const res = await fetch(`${BASE_URL}cities`, {
         method: "POST",
         body: JSON.stringify(newCity),
@@ -99,8 +102,8 @@ function CitiesProvider({ children }) {
     }
   }
   async function deleteCity(id) {
+    dispatch({ type: "loading" });
     try {
-      dispatch({ type: "loading" });
       await fetch(`${BASE_URL}cities/${id}`, {
         method: "DELETE",
       });
@@ -122,6 +125,7 @@ function CitiesProvider({ children }) {
         cities,
         isLoading,
         currentCity,
+        error,
         getCities,
         createCity,
         deleteCity,
